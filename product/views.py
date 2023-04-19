@@ -18,14 +18,10 @@ def main_api_view(request):
 
 @api_view(['GET'])
 def category_list_api_view(request):
-    """Get List Objects"""
-
     categories = Category.objects.all()
 
-    """ Serializer (Reformat) objacts to dict """
     data_dict = CategorySerializer(categories, many=True).data
 
-    """ Return data by Json file """
     return Response(data=data_dict)
 
 
@@ -75,7 +71,8 @@ def review_detail_api_view(request, id):
     try:
         review = Review.objects.get(id=id)
     except Review.DoesNotExist:
-        return Response(data = {'error': 'Review not found'},
+        return Response(data={'error': 'Review not found'},
                         status=status.HTTP_404_NOT_FOUND)
     data_dict = ReviewSerializer(review, many=False).data
     return Response(data=data_dict)
+
